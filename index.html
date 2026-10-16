@@ -17,12 +17,15 @@
         <a href="#support">Reach out support</a>
       </nav>
       <div class="nav-actions">
-        <a href="#login" class="btn btn-light">Login</a>
-        <a href="#quote" class="btn btn-primary">Get a quote</a>
+        <span class="signed-in-label" id="signed-in-label" hidden></span>
+        <a href="#login" class="btn btn-light" id="header-login">Login</a>
+        <a href="#quote" class="btn btn-primary" id="header-quote">Get a quote</a>
+        <a href="logout.php" class="btn btn-primary" id="header-logout" hidden>Log out</a>
       </div>
     </header>
 
     <main>
+      <div class="account-feedback" id="account-feedback" role="status" aria-live="polite" hidden></div>
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow">Clean energy for modern living</p>
@@ -155,32 +158,40 @@
           <div class="account-card signup-card">
             <h3>Customer sign up</h3>
             <p>Customers can sign up on their own in minutes to manage services, requests, and account details.</p>
-            <form class="mini-form" action="#" method="post">
-              <label>
-                Full name
-                <input type="text" name="name" placeholder="Your name">
-              </label>
-              <label>
-                Email address
-                <input type="email" name="email" placeholder="you@example.com">
-              </label>
-              <button type="submit" class="btn btn-primary">Create account</button>
-            </form>
+            <a class="btn btn-primary" href="index.php?register=1">Create customer account</a>
           </div>
 
           <div class="account-card login-card">
             <h3>Employee login</h3>
             <p>Employees are created and managed by HR or Admin to ensure secure access to internal systems.</p>
-            <form class="mini-form" action="#" method="post">
+            <form class="mini-form" action="login.php" method="post">
+              <input type="hidden" name="account_type" value="employee">
               <label>
                 Username
-                <input type="text" name="username" placeholder="Employee ID or username">
+                <input type="text" name="username" placeholder="Employee ID or username" autocomplete="username" required>
               </label>
               <label>
                 Password
-                <input type="password" name="password" placeholder="Enter password">
+                <input type="password" name="password" placeholder="Enter password" autocomplete="current-password" required>
               </label>
               <button type="submit" class="btn btn-secondary">Log in securely</button>
+            </form>
+          </div>
+
+          <div class="account-card login-card">
+            <h3>Customer login</h3>
+            <p>Sign in to your Sun Son Solar customer account.</p>
+            <form class="mini-form" action="login.php" method="post">
+              <input type="hidden" name="account_type" value="customer">
+              <label>
+                Username
+                <input type="text" name="username" placeholder="Your username" autocomplete="username" required>
+              </label>
+              <label>
+                Password
+                <input type="password" name="password" placeholder="Enter password" autocomplete="current-password" required>
+              </label>
+              <button type="submit" class="btn btn-primary">Log in as customer</button>
             </form>
           </div>
         </div>
@@ -312,6 +323,39 @@
       </div>
     </footer>
   </div>
+  <script>
+    const feedback = document.getElementById("account-feedback");
+
+    fetch("auth_status.php", { credentials: "same-origin", cache: "no-store" })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Unable to read session status");
+        return response.json();
+      })
+      .then(function (account) {
+        if (account.error) {
+          feedback.textContent = account.error;
+          feedback.classList.add("error-message");
+          feedback.hidden = false;
+        }
+
+        if (!account.logged_in) return;
+
+        const role = account.role === "hr" ? "HR" : account.role.charAt(0).toUpperCase() + account.role.slice(1);
+        document.getElementById("signed-in-label").textContent = role + ": " + account.name;
+        document.getElementById("signed-in-label").hidden = false;
+        document.getElementById("header-login").hidden = true;
+        document.getElementById("header-quote").hidden = true;
+        document.getElementById("header-logout").hidden = false;
+
+        feedback.textContent = "You are already signed in as " + account.name + ". Log out before signing in with another account.";
+        feedback.hidden = false;
+
+        document.querySelectorAll(".mini-form input, .mini-form button").forEach(function (control) {
+          control.disabled = true;
+        });
+      })
+      .catch(function () {});
+  </script>
 </body>
 </html>
 
