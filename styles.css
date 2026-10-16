@@ -97,48 +97,6 @@ input {
   gap: 10px;
 }
 
-.signed-in-label {
-  color: var(--green);
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
-.account-feedback {
-  margin: 0 0 24px;
-  border: 1px solid var(--border);
-  padding: 14px 18px;
-  background: var(--white);
-  border-radius: 10px;
-}
-
-.account-feedback.error-message {
-  border-color: var(--red);
-  background: #fff5f1;
-}
-
-.confirmation-page {
-  max-width: 760px;
-  margin: 48px auto;
-}
-
-.confirmation-card {
-  padding: 38px;
-}
-
-.confirmation-card h1 {
-  margin-bottom: 14px;
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  line-height: 1.08;
-}
-
-.confirmation-card > .btn {
-  margin-top: 12px;
-}
-
-[hidden] {
-  display: none !important;
-}
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -525,12 +483,6 @@ h1 {
 .mini-form input:focus {
   outline: 3px solid rgba(23, 98, 77, 0.12);
   border-color: var(--green);
-}
-
-.mini-form input:disabled,
-.mini-form button:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
 }
 
 .testimonial-card {

@@ -1,14 +1,9 @@
 <?php
-session_start();
-
-if ($_SERVER["REQUEST_METHOD"] == "GET" && !isset($_GET["register"])) {
-    readfile(__DIR__ . "/index.html");
-    exit;
-}
-
 require_once "db_connect.php";
 
 $errors = [];
+$success = "";
+
 $account_type = "customer";
 $firstname = "";
 $lastname = "";
@@ -19,6 +14,7 @@ $email = "";
 $phone = "";
 $address = "";
 $username = "";
+$department = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $account_type = isset($_POST["account_type"]) ? trim($_POST["account_type"]) : "";
@@ -32,12 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = isset($_POST["address"]) ? trim($_POST["address"]) : "";
     $username = isset($_POST["username"]) ? trim($_POST["username"]) : "";
     $password = isset($_POST["password"]) ? $_POST["password"] : "";
+    $department = isset($_POST["department"]) ? trim($_POST["department"]) : "";
 
     // validation niya par
     if ($account_type == "") {
         $errors[] = "Please select an account type.";
-    } elseif ($account_type != "customer") {
-        $errors[] = "Only customers can create an account here. Employees must sign in with an account created by an administrator.";
+    } elseif ($account_type != "customer" && $account_type != "employee") {
+        $errors[] = "Invalid account type.";
     }
 
     if ($firstname == "") {
@@ -78,6 +75,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Password is required.";
     }
 
+    if ($account_type == "employee" && $department == "") {
+        $errors[] = "Department is required for employee accounts.";
+    }
+
     // checks if username is already present in other tables
     if (empty($errors)) {
         $check_customer = $conn->prepare("SELECT customer_id FROM customers WHERE username = ?");
@@ -102,34 +103,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errors)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $conn->prepare("INSERT INTO customers (firstname, lastname, middlename, birthdate, gender, email, phone, address, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param(
-            "ssssssssss",
-            $firstname,
-            $lastname,
-            $middlename,
-            $birthdate,
-            $gender,
-            $email,
-            $phone,
-            $address,
-            $username,
-            $hashed_password
-        );
+        if ($account_type == "customer") {
+            $stmt = $conn->prepare("INSERT INTO customers (firstname, lastname, middlename, birthdate, gender, email, phone, address, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param(
+                "ssssssssss",
+                $firstname,
+                $lastname,
+                $middlename,
+                $birthdate,
+                $gender,
+                $email,
+                $phone,
+                $address,
+                $username,
+                $hashed_password
+            );
+        } else {
+            $stmt = $conn->prepare("INSERT INTO employees (firstname, lastname, middlename, birthdate, gender, email, phone, address, username, password, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param(
+                "sssssssssss",
+                $firstname,
+                $lastname,
+                $middlename,
+                $birthdate,
+                $gender,
+                $email,
+                $phone,
+                $address,
+                $username,
+                $hashed_password,
+                $department
+            );
+        }
 
         if ($stmt->execute()) {
-            $customer_id = $conn->insert_id;
-            $stmt->close();
-            $conn->close();
-            session_regenerate_id(true);
-            $_SESSION["user_id"] = $customer_id;
-            $_SESSION["username"] = $username;
-            $_SESSION["name"] = trim($firstname . " " . $lastname);
-            $_SESSION["email"] = $email;
-            $_SESSION["account_type"] = "customer";
-            $_SESSION["role"] = "customer";
-            header("Location: registration_success.php");
-            exit;
+            $success = "Account created successfully.";
+
+            $account_type = "customer";
+            $firstname = "";
+            $lastname = "";
+            $middlename = "";
+            $birthdate = "";
+            $gender = "";
+            $email = "";
+            $phone = "";
+            $address = "";
+            $username = "";
+            $department = "";
         } else {
             $errors[] = "The account could not be saved. Please try again.";
         }
@@ -174,13 +194,23 @@ function old_value($value) {
             </div>
         <?php endif; ?>
 
+        <?php if ($success != ""): ?>
+            <div class="message success-message">
+                <?php echo old_value($success); ?>
+            </div>
+        <?php endif; ?>
+
         <form class="registration-form" method="post" action="index.php">
             <fieldset>
                 <legend>Account type</legend>
                 <div class="account-types">
                     <label class="choice">
-                        <input type="radio" name="account_type" value="customer" checked required>
+                        <input type="radio" name="account_type" value="customer" <?php echo $account_type == "customer" ? "checked" : ""; ?> required>
                         Customer
+                    </label>
+                    <label class="choice">
+                        <input type="radio" name="account_type" value="employee" <?php echo $account_type == "employee" ? "checked" : ""; ?> required>
+                        Employee
                     </label>
                 </div>
             </fieldset>
@@ -253,6 +283,10 @@ function old_value($value) {
                         <input type="password" id="password" name="password" required>
                     </div>
 
+                    <div class="field full-width" id="department-field">
+                        <label for="department">Department <span>(employees only)</span></label>
+                        <input type="text" id="department" name="department" value="<?php echo old_value($department); ?>">
+                    </div>
                 </div>
             </fieldset>
 
@@ -262,5 +296,29 @@ function old_value($value) {
         </form>
     </main>
 
+    <script>
+        const accountTypes = document.querySelectorAll('input[name="account_type"]');
+        const departmentField = document.getElementById("department-field");
+        const departmentInput = document.getElementById("department");
+
+        function updateDepartmentField() {
+            let selectedType = document.querySelector('input[name="account_type"]:checked');
+
+            if (selectedType && selectedType.value === "employee") {
+                departmentField.style.display = "block";
+                departmentInput.required = true;
+            } else {
+                departmentField.style.display = "none";
+                departmentInput.required = false;
+                departmentInput.value = "";
+            }
+        }
+
+        accountTypes.forEach(function (radio) {
+            radio.addEventListener("change", updateDepartmentField);
+        });
+
+        updateDepartmentField();
+    </script>
 </body>
 </html>
