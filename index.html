@@ -1,110 +1,360 @@
 <!doctype html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sun Son Solar registration form">
-  <title>Sun Son Solar | Registration</title>
+  <meta name="description" content="Sun Son Solar offers clean energy solutions, solar consultations, installation, and maintenance for homes and businesses.">
+  <title>Sun Son Solar | Power Your Future</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="page">
-    <header class="page-header">
-      <p class="brand">SUN SON <span>SOLAR</span></p>
-      <p class="step">REGISTRATION</p>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand" aria-label="Sun Son Solar home">SUN SON <span>SOLAR</span></div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#about">Learn about the company</a>
+        <a href="#support">Reach out support</a>
+      </nav>
+      <div class="nav-actions">
+        <span class="signed-in-label" id="signed-in-label" hidden></span>
+        <a href="#login" class="btn btn-light" id="header-login">Login</a>
+        <a href="#quote" class="btn btn-primary" id="header-quote">Get a quote</a>
+        <a href="logout.php" class="btn btn-primary" id="header-logout" hidden>Log out</a>
+      </div>
     </header>
 
-    <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">Create an account</p>
-      <h1 id="page-title">Start your solar journey.</h1>
-      <p>Fields marked with <strong>*</strong> are required.</p>
-    </section>
+    <main>
+      <div class="account-feedback" id="account-feedback" role="status" aria-live="polite" hidden></div>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Clean energy for modern living</p>
+          <h1 id="hero-title">Power your future with solar</h1>
+          <p class="hero-text">
+            Sun Son Solar helps homes and businesses cut energy costs, improve sustainability,
+            and build long-term energy independence with personalized renewable energy solutions.
+          </p>
+          <div class="cta-group">
+            <a href="#quote" class="btn btn-primary">Request a free quote</a>
+            <a href="#services" class="btn btn-secondary">Explore services</a>
+          </div>
 
-    <form class="registration-form" action="#" method="post">
-      <fieldset>
-        <legend>Account type</legend>
-        <div class="account-types">
-          <label class="choice">
-            <input type="radio" name="accountType" value="customer" required>
-            Customer
-          </label>
-          <label class="choice">
-            <input type="radio" name="accountType" value="employee" required>
-            Employee
-          </label>
+          <div class="feature-pills" aria-label="Key solar benefits">
+            <span>Lower power bills</span>
+            <span>Cleaner living</span>
+            <span>Energy independence</span>
+          </div>
+
+          <ul class="hero-metrics" aria-label="Solar benefits">
+            <li>
+              <strong>30%</strong>
+              <span>Average savings</span>
+            </li>
+            <li>
+              <strong>24/7</strong>
+              <span>Monitoring support</span>
+            </li>
+            <li>
+              <strong>100%</strong>
+              <span>Committed service</span>
+            </li>
+          </ul>
         </div>
-      </fieldset>
 
-      <fieldset>
-        <legend>Personal information</legend>
-        <div class="form-grid">
-          <div class="field">
-            <label for="firstName">First name <strong>*</strong></label>
-            <input id="firstName" name="firstName" type="text" autocomplete="given-name" required>
+        <div class="hero-visual" aria-label="Solar energy overview">
+          <div class="hero-card main-card">
+            <p class="mini-label">Solar performance</p>
+            <div class="performance-ring">
+              <span>82%</span>
+            </div>
+            <div class="solar-stats">
+              <div>
+                <strong>11.4 kW</strong>
+                <span>System size</span>
+              </div>
+              <div>
+                <strong>4.6k</strong>
+                <span>Monthly savings</span>
+              </div>
+            </div>
           </div>
-          <div class="field">
-            <label for="lastName">Last name <strong>*</strong></label>
-            <input id="lastName" name="lastName" type="text" autocomplete="family-name" required>
-          </div>
-          <div class="field">
-            <label for="middleName">Middle name</label>
-            <input id="middleName" name="middleName" type="text" autocomplete="additional-name">
-          </div>
-          <div class="field">
-            <label for="birthdate">Birthdate <strong>*</strong></label>
-            <input id="birthdate" name="birthdate" type="date" required>
-          </div>
-          <div class="field">
-            <label for="gender">Gender <strong>*</strong></label>
-            <select id="gender" name="gender" required>
-              <option value="">Select one</option>
-              <option>Female</option>
-              <option>Male</option>
-              <option>Prefer not to say</option>
-            </select>
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Contact information</legend>
-        <div class="form-grid">
-          <div class="field">
-            <label for="email">Email address <strong>*</strong></label>
-            <input id="email" name="email" type="email" autocomplete="email" required>
-          </div>
-          <div class="field">
-            <label for="phone">Phone number <strong>*</strong></label>
-            <input id="phone" name="phone" type="tel" autocomplete="tel" required>
-          </div>
-          <div class="field full-width">
-            <label for="address">Address <strong>*</strong></label>
-            <textarea id="address" name="address" rows="3" autocomplete="street-address" required></textarea>
+          <div class="hero-card floating-card">
+            <p>Energy independence starts here.</p>
           </div>
         </div>
-      </fieldset>
+      </section>
 
-      <fieldset>
-        <legend>Account security</legend>
-        <div class="form-grid">
-          <div class="field">
-            <label for="username">Username <strong>*</strong></label>
-            <input id="username" name="username" type="text" autocomplete="username" required>
+      <section class="company-intro" id="about">
+        <div class="section-heading">
+          <p class="eyebrow">Why Sun Son Solar</p>
+          <h2>Smarter solar for a brighter tomorrow.</h2>
+        </div>
+        <div class="intro-grid">
+          <div class="intro-copy">
+            <p>
+              We design reliable solar systems that make it easier for families and businesses to
+              enjoy clean power, lower utility bills, and long-term peace of mind. Our mission is to
+              make renewable energy simple, accessible, and rewarding.
+            </p>
           </div>
-          <div class="field">
-            <label for="password">Password <strong>*</strong></label>
-            <input id="password" name="password" type="password" minlength="8" autocomplete="new-password" required>
-          </div>
-          <div class="field full-width">
-            <label for="department">Department <span>(employees only)</span></label>
-            <input id="department" name="department" type="text">
+          <div class="benefits" aria-label="Solar benefits list">
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <div>
+                <h3>Cost savings</h3>
+                <p>Reduce monthly electric bills and protect against rising rates.</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <div>
+                <h3>Sustainability</h3>
+                <p>Lower your carbon footprint and support a cleaner energy future.</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <div>
+                <h3>Energy independence</h3>
+                <p>Generate your own power and rely less on traditional utility grids.</p>
+              </div>
+            </div>
           </div>
         </div>
-      </fieldset>
+      </section>
 
-      <p class="privacy-note">Your information will be used to create and manage your Sun Son Solar account.</p>
-      <button class="submit-button" type="submit">
-        Create account
-      </button>
-    </form>
-  </main>
+      <section class="services" id="services">
+        <div class="section-heading center">
+          <p class="eyebrow">Our services</p>
+          <h2>Simple solutions from consultation to maintenance.</h2>
+        </div>
+
+        <div class="service-grid">
+          <article class="service-card">
+            <span class="service-number">01</span>
+            <h3>Consultation</h3>
+            <p>We assess your property, usage, and goals to build the right solar plan for your needs.</p>
+          </article>
+          <article class="service-card">
+            <span class="service-number">02</span>
+            <h3>Installation</h3>
+            <p>Our expert installers handle every step with precision, safety, and efficient project management.</p>
+          </article>
+          <article class="service-card">
+            <span class="service-number">03</span>
+            <h3>Maintenance</h3>
+            <p>Keep your system performing at its best with regular inspections, support, and monitoring.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="account-section" id="login">
+        <div class="section-heading">
+          <p class="eyebrow">Access your account</p>
+          <h2>Open a customer account or secure employee access.</h2>
+        </div>
+
+        <div class="account-grid">
+          <div class="account-card signup-card">
+            <h3>Customer sign up</h3>
+            <p>Customers can sign up on their own in minutes to manage services, requests, and account details.</p>
+            <a class="btn btn-primary" href="index.php?register=1">Create customer account</a>
+          </div>
+
+          <div class="account-card login-card">
+            <h3>Employee login</h3>
+            <p>Employees are created and managed by HR or Admin to ensure secure access to internal systems.</p>
+            <form class="mini-form" action="login.php" method="post">
+              <input type="hidden" name="account_type" value="employee">
+              <label>
+                Username
+                <input type="text" name="username" placeholder="Employee ID or username" autocomplete="username" required>
+              </label>
+              <label>
+                Password
+                <input type="password" name="password" placeholder="Enter password" autocomplete="current-password" required>
+              </label>
+              <button type="submit" class="btn btn-secondary">Log in securely</button>
+            </form>
+          </div>
+
+          <div class="account-card login-card">
+            <h3>Customer login</h3>
+            <p>Sign in to your Sun Son Solar customer account.</p>
+            <form class="mini-form" action="login.php" method="post">
+              <input type="hidden" name="account_type" value="customer">
+              <label>
+                Username
+                <input type="text" name="username" placeholder="Your username" autocomplete="username" required>
+              </label>
+              <label>
+                Password
+                <input type="password" name="password" placeholder="Enter password" autocomplete="current-password" required>
+              </label>
+              <button type="submit" class="btn btn-primary">Log in as customer</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="testimonials">
+        <div class="section-heading center">
+          <p class="eyebrow">Customer stories</p>
+          <h2>Real people. Real savings. Real results.</h2>
+        </div>
+
+        <div class="testimonial-grid">
+          <article class="testimonial-card">
+            <p>“The process was simple and the team explained every part clearly. Our bills dropped right away.”</p>
+            <div class="person">
+              <strong>Lurie Pabora</strong>
+              <span>Homeowner</span>
+            </div>
+          </article>
+          <article class="testimonial-card">
+            <p>“We wanted to reduce our carbon footprint without sacrificing performance. Sun Son Solar delivered.”</p>
+            <div class="person">
+              <strong>Vin De Lara</strong>
+              <span>Small business owner</span>
+            </div>
+          </article>
+          <article class="testimonial-card">
+            <p>“The installation was professional, the maintenance support has been excellent, and the savings are visible.”</p>
+            <div class="person">
+              <strong>Izaack Reyes</strong>
+              <span>Property manager</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta-banner" id="quote">
+        <div>
+          <p class="eyebrow">Ready to switch?</p>
+          <h2>Start your solar journey with a free consultation.</h2>
+        </div>
+        <a href="#support" class="btn btn-primary">Schedule a service</a>
+      </section>
+
+      <section class="faq-news">
+        <div class="faq-box">
+          <div class="section-heading">
+            <p class="eyebrow">FAQ</p>
+            <h2>Common questions.</h2>
+          </div>
+          <div class="faq-list">
+            <div>
+              <h3>How long does installation take?</h3>
+              <p>Most residential systems are completed within a few days after design approval.</p>
+            </div>
+            <div>
+              <h3>Do you offer maintenance plans?</h3>
+              <p>Yes. We provide ongoing care and system monitoring to keep performance strong.</p>
+            </div>
+            <div>
+              <h3>Is solar worth it for my home?</h3>
+              <p>Our consultation reviews your energy usage, roof layout, and goals to recommend the best fit.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="news-box">
+          <div class="section-heading">
+            <p class="eyebrow">Blog & news</p>
+            <h2>Insights for smarter energy choices.</h2>
+          </div>
+          <div class="news-list">
+            <article>
+              <span>April 2026</span>
+              <h3>How solar can cut utility costs year-round</h3>
+            </article>
+            <article>
+              <span>March 2026</span>
+              <h3>Why businesses are switching to sustainable energy</h3>
+            </article>
+            <article>
+              <span>February 2026</span>
+              <h3>Sun Son Solar expands support for commercial rooftops</h3>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="support">
+      <div class="footer-grid">
+        <div>
+          <div class="brand footer-brand">SUN SON <span>SOLAR</span></div>
+          <p>We help people and businesses move toward cleaner energy with trusted solar guidance and dependable service.</p>
+        </div>
+        <div>
+          <h3>Company</h3>
+          <ul>
+            <li><a href="#about">About us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#quote">Request a quote</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <ul>
+            <li>hello@sunsonsolar.com</li>
+            <li>(555) 214-7748</li>
+            <li>780 Greenway Ave, Suite 200</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Follow us</h3>
+          <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Sun Son Solar. All rights reserved.</p>
+        <div>
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms</a>
+          <a href="#">FAQ</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script>
+    const feedback = document.getElementById("account-feedback");
+
+    fetch("auth_status.php", { credentials: "same-origin", cache: "no-store" })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Unable to read session status");
+        return response.json();
+      })
+      .then(function (account) {
+        if (account.error) {
+          feedback.textContent = account.error;
+          feedback.classList.add("error-message");
+          feedback.hidden = false;
+        }
+
+        if (!account.logged_in) return;
+
+        const role = account.role === "hr" ? "HR" : account.role.charAt(0).toUpperCase() + account.role.slice(1);
+        document.getElementById("signed-in-label").textContent = role + ": " + account.name;
+        document.getElementById("signed-in-label").hidden = false;
+        document.getElementById("header-login").hidden = true;
+        document.getElementById("header-quote").hidden = true;
+        document.getElementById("header-logout").hidden = false;
+
+        feedback.textContent = "You are already signed in as " + account.name + ". Log out before signing in with another account.";
+        feedback.hidden = false;
+
+        document.querySelectorAll(".mini-form input, .mini-form button").forEach(function (control) {
+          control.disabled = true;
+        });
+      })
+      .catch(function () {});
+  </script>
 </body>
 </html>
