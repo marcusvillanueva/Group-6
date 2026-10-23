@@ -1,0 +1,25 @@
+# Sun Son Solar - files Git should never commit
+
+# Local settings (each computer has its own)
+.env
+
+# CodeIgniter runtime files (sessions, logs, cache)
+writable/cache/*
+!writable/cache/index.html
+writable/logs/*
+!writable/logs/index.html
+writable/session/*
+!writable/session/index.html
+writable/uploads/*
+!writable/uploads/index.html
+writable/debugbar/*
+!writable/debugbar/index.html
+
+# Local backup copy of the original frontend (not part of the project)
+frontendoriginal9-18-26/
+
+# Editor / OS junk
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
