@@ -1,0 +1,10 @@
+# Sun Son Solar - CodeIgniter 4
+# Sends every request into the public/ folder, so the site still opens at
+# http://localhost/Group-6/ and the app/, system/ and writable/ folders
+# can never be opened directly from the browser.
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
